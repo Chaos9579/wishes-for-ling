@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给玲姐的每日祝福</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            font-family: "微软雅黑", sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+        }
+        .wish {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        .message {
+            font-size: 1.2em;
+            color: #666;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            transform: rotate(45deg);
+            animation: heartFloat 4s ease-in infinite;
+            opacity: 0;
+        }
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart::before {
+            left: -10px;
+        }
+        .heart::after {
+            top: -10px;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes heartFloat {
+            0% {
+                transform: rotate(45deg) translateY(0) scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: rotate(45deg) translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+        .button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+        }
+        .button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        @media (max-width: 600px) {
+            .wish {
+                margin: 10px;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            .message {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts"></div>
+    <div class="container">
+        <div class="wish">
+            <h1>玲姐，今天也要开开心心哦！</h1>
+            <div class="message" id="message"></div>
+            <button class="button" onclick="changeMessage()">换个祝福</button>
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            "愿玲姐的每一天都像清晨的阳光一样明媚温暖～",
+            "今天也是元气满满的一天呢！玲姐加油！💪",
+            "希望玲姐天天开心，笑容比花儿还美～",
+            "玲姐今天也是世界上最棒的！✨",
+            "愿玲姐的生活永远充满温暖和惊喜～",
+            "今天也要像玲姐的笑容一样灿烂哦！",
+            "祝玲姐工作顺心，心想事成～",
+            "玲姐的善良和温暖总能感染身边的每个人呢！",
+            "愿玲姐每天都被幸福和快乐环绕～",
+            "玲姐今天也要继续发光发热哦！⭐",
+            "玲姐就是这条街最靓的仔！🌟",
+            "开心是一天，不开心也是一天，不如开开心心过每一天～",
+            "玲姐的笑容就是今天最好的礼物！🎁",
+            "愿玲姐的快乐像星星一样，数也数不清～✨",
+            "每天醒来都是新的开始，玲姐加油！💪",
+            "玲姐的人生剧本由自己编写，一定精彩纷呈！📖",
+            "祝玲姐天天开心，事事顺心，永远年轻！🌸",
+            "玲姐的魅力就像阳光一样温暖每个人～☀️",
+            "今天也要美美哒，开心哒！玲姐最棒！🌈",
+            "愿玲姐的生活甜甜蜜蜜，快快乐乐！🍯",
+            "玲姐就是传说中的开心果，永远那么阳光！🌞",
+            "愿玲姐的每一天都被幸运环绕，被快乐包围！🍀",
+            "玲姐的笑容就是最治愈的良药～😊",
+            "今天也要继续做最棒的玲姐！加油！💫",
+            "愿玲姐的生活像彩虹一样绚丽多彩！🌈"
+        ];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            document.querySelector('.hearts').appendChild(heart);
+            
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        function changeMessage() {
+            const messageElement = document.getElementById('message');
+            let newMessage;
+            do {
+                newMessage = messages[Math.floor(Math.random() * messages.length)];
+            } while (newMessage === messageElement.textContent);
+            
+            messageElement.textContent = newMessage;
+            
+            // 创建多个心形
+            for(let i = 0; i < 5; i++) {
+                setTimeout(createHeart, i * 150);
+            }
+        }
+
+        // 初始显示一条消息
+        changeMessage();
+
+        // 定期创建心形
+        setInterval(() => {
+            createHeart();
+        }, 2000);
+    </script>
+</body>
+</html>
