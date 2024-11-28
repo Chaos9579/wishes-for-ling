@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Me</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #FFE6E6, #FFB6C1);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin: 20px;
+        }
+        .qr-wrapper {
+            background: white;
+            padding: 20px;
+            border-radius: 25px;
+            margin: 20px auto;
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.2);
+            position: relative;
+            width: fit-content;
+        }
+        .qr-code {
+            width: 280px;
+            height: 280px;
+            display: block;
+        }
+        .scan-text {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+            font-family: "Arial Black", sans-serif;
+        }
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: floatHeart 4s ease-in-out infinite;
+            opacity: 0.7;
+        }
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+        .decoration {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.2;
+        }
+        .top-left { top: 10px; left: 10px; }
+        .top-right { top: 10px; right: 10px; }
+        .bottom-left { bottom: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="decoration top-left">🌸</div>
+        <div class="decoration top-right">💝</div>
+        <div class="decoration bottom-left">💖</div>
+        <div class="decoration bottom-right">🌸</div>
+        <div class="scan-text">SCAN ME</div>
+        <div class="qr-wrapper">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=https://chaos9579.github.io/wishes-for-ling/&color=FF69B4" alt="QR Code" class="qr-code">
+        </div>
+        <div class="hearts" id="hearts"></div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const hearts = ['💖', '💝', '💗', '💓', '💕'];
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            document.querySelector('.hearts').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+
+        setInterval(createHeart, 500);
+    </script>
+</body>
+</html>
